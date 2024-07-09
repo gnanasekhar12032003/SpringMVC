@@ -1,0 +1,67 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+      <form action="calculate" method="post">
+         Enter first number : <input type="number" name="num1"><br><br>
+         Enter second number : <input type="number" name="num2"><br><br>
+         <input type="submit">
+         </form>
+</body>
+</html>
+
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+     <servlet-name>first</servlet-name>
+     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    </servlet>
+  <servlet-mapping>
+      <servlet-name>first</servlet-name>
+      <url-pattern>/</url-pattern>
+     </servlet-mapping>
+</web-app>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:component-scan base-package="com.jsp"></context:component-scan>
+	<bean id="resolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+       <property name="prefix" value="/" />
+	   <property name="suffix" value=".jsp" />
+    </bean>  
+</beans>
+
+@Controller
+public class HomeController {
+
+@RequestMapping("/calculate")
+	public ModelAndView calculateSum(ServletRequest request) {
+		int number1=Integer.parseInt(request.getParameter("num1"));
+		int number2=Integer.parseInt(request.getParameter("num2"));
+		
+		int sum=number1+number2;
+		
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("answer",sum);
+		mav.setViewName("output");
+		
+		return mav;
+	}
+	
+}
